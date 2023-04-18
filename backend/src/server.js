@@ -23,7 +23,7 @@ app.put("/api/articles/:name/upvote", (req, res) => {
   if (article) {
     article.upvotes += 1;
     res.send(
-      `The article ${name} has been upvoted for ${article.upvotes} times`
+      `The article ${name} has been upvoted for ${article.upvotes} times!!!`
     );
   } else {
     res.send(`The article ${name} does not exist`);
