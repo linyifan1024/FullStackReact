@@ -3,14 +3,17 @@ let articleInfo = [
   {
     name: "learn-react",
     upvotes: 0,
+    comments: [],
   },
   {
     name: "learn-node",
     upvotes: 0,
+    comments: [],
   },
   {
     name: "mongodb",
     upvotes: 0,
+    comments: [],
   },
 ];
 
@@ -29,4 +32,19 @@ app.put("/api/articles/:name/upvote", (req, res) => {
     res.send(`The article ${name} does not exist`);
   }
 });
+
+app.post("/api/articles/:name/comments", (req, res) => {
+  const { name } = req.params;
+  const { userName, text } = req.body;
+  const article = articleInfo.find((article) => article.name === name);
+  if (article) {
+    article.comments.push({ userName, text });
+    res.send(
+      `The comment has been added to the article ${name}  ${userName}: ${text}`
+    );
+  } else {
+    res.send("The article does not exist");
+  }
+});
+
 app.listen(8000, () => console.log("Listening on port 8000"));
