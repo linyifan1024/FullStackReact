@@ -1,3 +1,4 @@
+import React from 'react';
 import { useParams } from "react-router-dom";
 import articles from "./article-content";
 import NotFoundPage from "./NotFoundPage";
