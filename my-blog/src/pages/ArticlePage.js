@@ -6,9 +6,10 @@ import articles from "./article-content";
 import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList";
 import AddCommentForm from "../components/AddCommentForm";
+import useUser from "../hooks/useUser";
 const ArticlePage = () => {
   const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
-
+  const { user, isLoading } = useUser();
   useEffect(() => {
     const loadArticleInfo = async () => {
       const response = await axios.get(`/api/articles/${articleId}`);
@@ -36,17 +37,27 @@ const ArticlePage = () => {
     <>
       <h1>{article.title}</h1>
       <div className="upvotes-section">
-        <button onClick={addUpvote}>UpVote</button>
-        <p>This areticle has {articleInfo.upvotes} upvote(s)</p>
+        {user ? (
+          <button onClick={addUpvote}>UpVote</button>
+        ) : (
+          <button>Log in to upvote</button>
+        )}
+        <p>This areticle has {articleInfo.upvotes} upvote(s)</p>:
       </div>
 
       {article.content.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
       ))}
-      <AddCommentForm
-        articleName={articleId}
-        onArticleUpdated={(newArticleInfo) => setArticleInfo(newArticleInfo)}
-      />
+
+      {user ? (
+        <AddCommentForm
+          articleName={articleId}
+          onArticleUpdated={(newArticleInfo) => setArticleInfo(newArticleInfo)}
+        />
+      ) : (
+        <button>Log in to comment</button>
+      )}
+
       <CommentsList comments={articleInfo.comments} />
     </>
   );
