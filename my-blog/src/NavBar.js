@@ -20,6 +20,9 @@ const NavBar = () => {
         <li>
           <Link to="/create-account">Create Account</Link>
         </li>
+        <li>
+          <Link to="/upload-resume">Upload Resume</Link>
+        </li>
       </ul>
     </nav>
   );

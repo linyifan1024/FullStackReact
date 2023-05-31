@@ -8,7 +8,7 @@ import ArticlePage from "./pages/ArticlePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
-
+import UploadResumePage from "./pages/UploadResumePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
             <Route path="/articles/:articleId" element={<ArticlePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/create-account" element={<CreateAccountPage />} />
+            <Route path="/upload-resume" element={<UploadResumePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>

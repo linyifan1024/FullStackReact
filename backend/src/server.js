@@ -1,7 +1,11 @@
 import express from "express";
+import multer from "multer";
 import { db, connectToDb } from "./db.js";
 const app = express();
+const upload = multer({ dest: "uploads/" });
 app.use(express.json());
+
+// create a function to get all articles
 app.get("/api/articles/:name", async (req, res) => {
   const { name } = req.params;
   const article = await db.collection("articles").findOne({ name });
@@ -12,6 +16,7 @@ app.get("/api/articles/:name", async (req, res) => {
   }
 });
 
+// create upvote function
 app.put("/api/articles/:name/upvote", async (req, res) => {
   const { name } = req.params;
 
@@ -25,6 +30,7 @@ app.put("/api/articles/:name/upvote", async (req, res) => {
   }
 });
 
+// create downvote function
 app.put("/api/articles/:name/downvote", async (req, res) => {
   const { name } = req.params;
 
@@ -42,6 +48,7 @@ app.put("/api/articles/:name/downvote", async (req, res) => {
   }
 });
 
+// add comment function
 app.post("/api/articles/:name/comments", async (req, res) => {
   const { name } = req.params;
   const { postedBy, text } = req.body;
@@ -59,6 +66,15 @@ app.post("/api/articles/:name/comments", async (req, res) => {
   } else {
     res.send("The article does not exist");
   }
+});
+
+// upload resume function
+app.post("/api/upload-resume", upload.single("resume"), (req, res) => {
+  const uploadedFile = req.file;
+
+  res.send(req.file);
+
+  // const uploadedFile = req.file;
 });
 
 connectToDb(() => {
